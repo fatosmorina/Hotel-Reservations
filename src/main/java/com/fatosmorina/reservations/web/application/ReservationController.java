@@ -19,7 +19,7 @@ import com.fatosmorina.reservations.business.service.ReservationService;
 @Controller
 @RequestMapping(value = "/reservations")
 public class ReservationController {
-    private static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
+    private static final DateFormat DATE_FORMAT = new SimpleDateFormat("dd-MM-yyyy");
 
     @Autowired
     private ReservationService reservationService;
