@@ -18,6 +18,7 @@ public class Room {
     private String name;
     @Column(name = "ROOM_NUMBER")
     private String number;
+    @Column(name = "BED_INFO")
     private String bedInfo;
 
     public long getId() {
