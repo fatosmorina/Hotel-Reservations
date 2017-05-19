@@ -14,7 +14,7 @@ public class Room {
     @Column(name = "ROOM_ID")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    @Column(name = "ROOM_NAME")
+    @Column(name = "NAME")
     private String name;
     @Column(name = "ROOM_NUMBER")
     private String number;

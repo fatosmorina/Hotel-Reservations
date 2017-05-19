@@ -25,7 +25,6 @@ public class ReservationService {
 
     @Autowired
     public ReservationService(RoomRepository roomRepository, GuestRepository guestRepository, ReservationRepository reservationRepository) {
-        super();
         this.roomRepository = roomRepository;
         this.guestRepository = guestRepository;
         this.reservationRepository = reservationRepository;
@@ -41,7 +40,6 @@ public class ReservationService {
             roomReservation.setRoomNumber(room.getNumber());
             roomReservationMap.put(room.getId(), roomReservation);
         });
-
         Iterable<Reservation> reservations = this.reservationRepository.findByDate(new java.sql.Date(date.getTime()));
         if (reservations != null) {
             reservations.forEach(reservation -> {
@@ -55,11 +53,10 @@ public class ReservationService {
                 }
             });
         }
-        List<RoomReservation> roomReservations = new ArrayList<RoomReservation>();
+        List<RoomReservation> roomReservations = new ArrayList<>();
         for (Long roomId : roomReservationMap.keySet()) {
             roomReservations.add(roomReservationMap.get(roomId));
         }
         return roomReservations;
     }
-
 }

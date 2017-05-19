@@ -19,18 +19,18 @@ import com.fatosmorina.reservations.business.service.ReservationService;
 @Controller
 @RequestMapping(value = "/reservations")
 public class ReservationController {
+    private static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
 
-    private static final DateFormat DATE_FORMAT = new SimpleDateFormat("dd-MM-yyyy");
     @Autowired
     private ReservationService reservationService;
 
     @RequestMapping(method = RequestMethod.GET)
     public String getReservations(@RequestParam(value = "date", required = false) String dateString, Model model) {
         Date date = null;
-        if (dateString != null) {
+        if (dateString != null && "".equals(dateString)) {
             try {
                 date = DATE_FORMAT.parse(dateString);
-            } catch (ParseException e) {
+            } catch (ParseException pe) {
                 date = new Date();
             }
         } else {
