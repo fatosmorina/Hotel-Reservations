@@ -1,3 +1,3 @@
 # Hotel-Reservations
-Hotel Reservations web application developed using Spring Framework
+Hotel Reservations web application developed using Spring Boot
 
