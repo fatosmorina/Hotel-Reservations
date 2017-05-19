@@ -1,5 +1,8 @@
 package com.fatosmorina.reservations.business.service;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -22,6 +25,7 @@ public class ReservationService {
     private RoomRepository roomRepository;
     private GuestRepository guestRepository;
     private ReservationRepository reservationRepository;
+    private static final DateFormat DATE_FORMAT = new SimpleDateFormat("dd-MM-yyyy");
 
     @Autowired
     public ReservationService(RoomRepository roomRepository, GuestRepository guestRepository, ReservationRepository reservationRepository) {
@@ -58,5 +62,19 @@ public class ReservationService {
             roomReservations.add(roomReservationMap.get(roomId));
         }
         return roomReservations;
+    }
+
+    private Date createDateFromDateString(String dateString) {
+        Date date = null;
+        if (null != dateString) {
+            try {
+                date = DATE_FORMAT.parse(dateString);
+            } catch (ParseException pe) {
+                date = new Date();
+            }
+        } else {
+            date = new Date();
+        }
+        return date;
     }
 }
