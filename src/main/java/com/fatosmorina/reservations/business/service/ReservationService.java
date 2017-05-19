@@ -25,6 +25,7 @@ public class ReservationService {
     private RoomRepository roomRepository;
     private GuestRepository guestRepository;
     private ReservationRepository reservationRepository;
+
     private static final DateFormat DATE_FORMAT = new SimpleDateFormat("dd-MM-yyyy");
 
     @Autowired
@@ -34,7 +35,8 @@ public class ReservationService {
         this.reservationRepository = reservationRepository;
     }
 
-    public List<RoomReservation> getRoomReservationsForDate(Date date) {
+    public List<RoomReservation> getRoomReservationsForDate(String dateString) {
+        Date date = this.createDateFromDateString(dateString);
         Iterable<Room> rooms = this.roomRepository.findAll();
         Map<Long, RoomReservation> roomReservationMap = new HashMap<>();
         rooms.forEach(room -> {
@@ -45,7 +47,7 @@ public class ReservationService {
             roomReservationMap.put(room.getId(), roomReservation);
         });
         Iterable<Reservation> reservations = this.reservationRepository.findByDate(new java.sql.Date(date.getTime()));
-        if (reservations != null) {
+        if (null != reservations) {
             reservations.forEach(reservation -> {
                 Guest guest = this.guestRepository.findOne(reservation.getGuestId());
                 if (guest != null) {
@@ -57,7 +59,7 @@ public class ReservationService {
                 }
             });
         }
-        List<RoomReservation> roomReservations = new ArrayList<RoomReservation>();
+        List<RoomReservation> roomReservations = new ArrayList<>();
         for (Long roomId : roomReservationMap.keySet()) {
             roomReservations.add(roomReservationMap.get(roomId));
         }
@@ -66,7 +68,7 @@ public class ReservationService {
 
     private Date createDateFromDateString(String dateString) {
         Date date = null;
-        if (null != dateString) {
+        if (dateString != null) {
             try {
                 date = DATE_FORMAT.parse(dateString);
             } catch (ParseException pe) {
