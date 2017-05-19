@@ -1,5 +1,7 @@
 package com.fatosmorina.reservations.web.application;
 
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -17,9 +19,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
-
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.mockito.BDDMockito.given;
 
 import com.fatosmorina.reservations.business.domain.RoomReservation;
 import com.fatosmorina.reservations.business.service.ReservationService;
@@ -49,7 +48,7 @@ public class ReservationControllerTest {
         mockRoomReservation.setRoomName("First Room");
         mockReservationList.add(mockRoomReservation);
 
-        given(reservationService.getRoomReservationsForDate(date)).willReturn(mockReservationList);
+        given(reservationService.getRoomReservationsForDate("11-03-2017")).willReturn(mockReservationList);
         this.mockMvc.perform(get("/reservations?date=11-03-2017"))
             .andExpect(status().isOk())
             .andExpect(content().string(containsString("Guest, First")));
