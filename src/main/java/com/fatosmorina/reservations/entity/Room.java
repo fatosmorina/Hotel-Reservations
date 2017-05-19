@@ -14,6 +14,7 @@ public class Room {
     @Column(name = "ROOM_ID")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+    @Column(name = "ROOM_NAME")
     private String name;
     private String number;
     private String bedInfo;
