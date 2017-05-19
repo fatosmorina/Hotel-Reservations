@@ -1,9 +1,14 @@
 package com.fatosmorina.reservations.web.application;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,6 +18,10 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.mockito.BDDMockito.given;
+
+import com.fatosmorina.reservations.business.domain.RoomReservation;
 import com.fatosmorina.reservations.business.service.ReservationService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -27,7 +36,22 @@ public class ReservationControllerTest {
     private static final DateFormat DATE_FORMAT = new SimpleDateFormat("dd-MM-yyyy");
 
     @Test
-    public void getReservations() throws ParseException {
+    public void getReservations() throws Exception {
         Date date = DATE_FORMAT.parse("11-03-2017");
+        List<RoomReservation> mockReservationList = new ArrayList<RoomReservation>();
+        RoomReservation mockRoomReservation = new RoomReservation();
+        mockRoomReservation.setFirstName("First");
+        mockRoomReservation.setLastName("Guest");
+        mockRoomReservation.setDate(date);
+        mockRoomReservation.setGuestId(1l);
+        mockRoomReservation.setRoomNumber("R1");
+        mockRoomReservation.setRoomId(200l);
+        mockRoomReservation.setRoomName("First Room");
+        mockReservationList.add(mockRoomReservation);
+
+        given(reservationService.getRoomReservationsForDate(date)).willReturn(mockReservationList);
+        this.mockMvc.perform(get("/reservations?date=11-03-2017"))
+            .andExpect(status().isOk())
+            .andExpect(content().string(containsString("Guest, First")));
     }
 }

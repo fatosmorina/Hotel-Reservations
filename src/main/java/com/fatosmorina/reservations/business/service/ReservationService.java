@@ -53,7 +53,7 @@ public class ReservationService {
                 }
             });
         }
-        List<RoomReservation> roomReservations = new ArrayList<>();
+        List<RoomReservation> roomReservations = new ArrayList<RoomReservation>();
         for (Long roomId : roomReservationMap.keySet()) {
             roomReservations.add(roomReservationMap.get(roomId));
         }
