@@ -11,6 +11,12 @@ public class RoomReservation {
     private String lastName;
     private Date date;
 
+    public RoomReservation() {
+        super();
+    }
+    
+    
+
     public long getRoomId() {
         return roomId;
     }
